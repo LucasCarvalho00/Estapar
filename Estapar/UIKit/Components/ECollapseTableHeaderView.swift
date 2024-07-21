@@ -145,7 +145,7 @@ final class ECollapseTableHeaderView: UITableViewHeaderFooterView {
     func setupUI(title: String, expanded: Bool, filtered: Bool) {
         titleLabel.text = title
         arrownImageView.image = expanded ? .eIcArrownUp : .eIcArrownDown
-        contentDividerView.isHidden = !expanded
+        contentDividerView.isHidden = filtered || expanded ? false : true
         arrownImageView.isHidden = filtered
     }
 
