@@ -25,8 +25,8 @@ final class HelpCenterHomeDataView: UIView {
     
     // MARK: - Private Properties
 
-    var entity: HelpCenterHomeDataViewEntity?
-    var heightHeaderConstraint: NSLayoutConstraint?
+    private var entity: HelpCenterHomeDataViewEntity?
+    private var heightHeaderConstraint: NSLayoutConstraint?
 
     // MARK: - Delegates
     

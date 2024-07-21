@@ -261,7 +261,8 @@ extension HelpCenterDetailDataView: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        cell.setupUI(title: filtredEntity[indexPath.section].articles[indexPath.row].title, lastItem: false)
+        let articles = filtredEntity[indexPath.section].articles
+        cell.setupUI(title: articles[indexPath.row].title, lastItem: indexPath.row == articles.count - 1)
         return cell
     }
 }

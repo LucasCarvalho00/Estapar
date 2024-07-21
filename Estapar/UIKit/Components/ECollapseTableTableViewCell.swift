@@ -13,10 +13,16 @@ final class ECollapseTableTableViewCell: UITableViewCell {
 
     private struct Metrics {
         static let borderWidth: CGFloat = 2.0
+        static let dividerHeight: CGFloat = 8.0
         static let borderRadius: CGFloat = 10.0
         static let arrownImageSize: CGFloat = 16.0
     }
     
+    // MARK: - Private Properties
+
+    private var rightBottomConstraint: NSLayoutConstraint?
+    private var leftBottomConstraint: NSLayoutConstraint?
+
     // MARK: - Life Cyle
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -35,6 +41,59 @@ final class ECollapseTableTableViewCell: UITableViewCell {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .eBackground
+        view.layer.borderWidth = Metrics.borderWidth
+        view.layer.borderColor = UIColor.eBorder.cgColor
+        view.layer.cornerRadius = Metrics.borderRadius
+        return view
+    }()
+    
+    private lazy var dividerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .eBackground
+        return view
+    }()
+    
+    private lazy var bottomDividerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .eBackground
+        return view
+    }()
+    
+    private lazy var contentDividerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .eBackground
+        view.isHidden = true
+        return view
+    }()
+    
+    private lazy var leftBorderView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .eBorder
+        return view
+    }()
+    
+    private lazy var rightBorderView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .eBorder
+        return view
+    }()
+    
+    private lazy var bottomLeftBorderView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .eBorder
+        return view
+    }()
+    
+    private lazy var bottomRightBorderView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .eBorder
         return view
     }()
     
@@ -60,6 +119,12 @@ final class ECollapseTableTableViewCell: UITableViewCell {
 
     private func constraintUI() {
         contentView.addSubview(borderView)
+        contentView.addSubview(dividerView)
+        contentView.addSubview(bottomDividerView)
+        contentView.addSubview(leftBorderView)
+        contentView.addSubview(rightBorderView)
+        contentView.addSubview(bottomLeftBorderView)
+        contentView.addSubview(bottomRightBorderView)
         borderView.addSubview(titleLabel)
         borderView.addSubview(arrownImageView)
     }
@@ -70,6 +135,36 @@ final class ECollapseTableTableViewCell: UITableViewCell {
             borderView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             borderView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             borderView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            
+            dividerView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            dividerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            dividerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            dividerView.heightAnchor.constraint(equalToConstant: Metrics.dividerHeight),
+
+            bottomDividerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            bottomDividerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            bottomDividerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            bottomDividerView.heightAnchor.constraint(equalToConstant: Metrics.dividerHeight),
+            
+            leftBorderView.leadingAnchor.constraint(equalTo: dividerView.leadingAnchor),
+            leftBorderView.topAnchor.constraint(equalTo: dividerView.topAnchor),
+            leftBorderView.bottomAnchor.constraint(equalTo: dividerView.bottomAnchor),
+            leftBorderView.widthAnchor.constraint(equalToConstant: Metrics.borderWidth),
+            
+            rightBorderView.rightAnchor.constraint(equalTo: dividerView.rightAnchor),
+            rightBorderView.topAnchor.constraint(equalTo: dividerView.topAnchor),
+            rightBorderView.bottomAnchor.constraint(equalTo: dividerView.bottomAnchor),
+            rightBorderView.widthAnchor.constraint(equalToConstant: Metrics.borderWidth),
+            
+            bottomLeftBorderView.leadingAnchor.constraint(equalTo: bottomDividerView.leadingAnchor),
+            bottomLeftBorderView.topAnchor.constraint(equalTo: bottomDividerView.topAnchor),
+            bottomLeftBorderView.bottomAnchor.constraint(equalTo: bottomDividerView.bottomAnchor),
+            bottomLeftBorderView.widthAnchor.constraint(equalToConstant: Metrics.borderWidth),
+            
+            bottomRightBorderView.rightAnchor.constraint(equalTo: bottomDividerView.rightAnchor),
+            bottomRightBorderView.topAnchor.constraint(equalTo: bottomDividerView.topAnchor),
+            bottomRightBorderView.bottomAnchor.constraint(equalTo: bottomDividerView.bottomAnchor),
+            bottomRightBorderView.widthAnchor.constraint(equalToConstant: Metrics.borderWidth),
             
             arrownImageView.trailingAnchor.constraint(equalTo: borderView.trailingAnchor, constant: -EMetrics.largeMargin),
             arrownImageView.heightAnchor.constraint(equalToConstant: Metrics.arrownImageSize),
@@ -87,6 +182,8 @@ final class ECollapseTableTableViewCell: UITableViewCell {
     
     func setupUI(title: String, lastItem: Bool) {
         titleLabel.text = title
+        bottomDividerView.isHidden = lastItem
+        bottomLeftBorderView.isHidden = lastItem
+        bottomRightBorderView.isHidden = lastItem
     }
 }
-
